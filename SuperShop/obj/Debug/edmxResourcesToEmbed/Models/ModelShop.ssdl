@@ -1,0 +1,283 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ShopModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="BASKET">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="StoreId" Type="int" Nullable="false" />
+    <Property Name="Count" Type="int" />
+  </EntityType>
+  <EntityType Name="Category">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="CategoryId" Type="int" />
+    <Property Name="Description" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="Items">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="CategoryId" Type="int" />
+    <Property Name="Description" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="Media">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FileName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="FileType" Type="nvarchar" MaxLength="4" Nullable="false" />
+    <Property Name="ItemId" Type="int" />
+    <Property Name="CategoryId" Type="int" />
+    <Property Name="File" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="Order">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="Date" Type="datetime" Nullable="false" />
+    <Property Name="State" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OrderList">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OrderId" Type="int" Nullable="false" />
+    <Property Name="ItemId" Type="int" Nullable="false" />
+    <Property Name="Price" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="Count" Type="int" />
+  </EntityType>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Description" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="State">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Store">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ItemId" Type="int" Nullable="false" />
+    <Property Name="Count" Type="int" />
+    <Property Name="DateGet" Type="datetime" />
+    <Property Name="Price" Type="decimal" Precision="18" Scale="0" />
+  </EntityType>
+  <EntityType Name="Story">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="ItemId" Type="int" Nullable="false" />
+    <Property Name="DataOfPuchase" Type="float" />
+    <Property Name="TimeOfPurchase" Type="float" />
+    <Property Name="ListOfPurchase" Type="varchar" MaxLength="1000" />
+    <Property Name="CommodityPrices" Type="float" Nullable="false" />
+    <Property Name="TheTotalValueOfTheCheck" Type="float" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Age" Type="int" Nullable="false" />
+    <Property Name="Phone" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Login" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="RoleId" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_BASKET_Store">
+    <End Role="Store" Type="Self.Store" Multiplicity="1" />
+    <End Role="BASKET" Type="Self.BASKET" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Store">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="BASKET">
+        <PropertyRef Name="StoreId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BASKET_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="BASKET" Type="Self.BASKET" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="BASKET">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Items_Category">
+    <End Role="Category" Type="Self.Category" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Items" Type="Self.Items" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Category">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Items">
+        <PropertyRef Name="CategoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Order_State">
+    <End Role="State" Type="Self.State" Multiplicity="1" />
+    <End Role="Order" Type="Self.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="State">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="State" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Order_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="Order" Type="Self.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderList_Items">
+    <End Role="Items" Type="Self.Items" Multiplicity="1" />
+    <End Role="OrderList" Type="Self.OrderList" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Items">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OrderList">
+        <PropertyRef Name="ItemId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderList_Order">
+    <End Role="Order" Type="Self.Order" Multiplicity="1" />
+    <End Role="OrderList" Type="Self.OrderList" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Order">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OrderList">
+        <PropertyRef Name="OrderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Store_Items">
+    <End Role="Items" Type="Self.Items" Multiplicity="1" />
+    <End Role="Store" Type="Self.Store" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Items">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Store">
+        <PropertyRef Name="ItemId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Users_Role">
+    <End Role="Role" Type="Self.Role" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Users" Type="Self.Users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Users">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ShopModelStoreContainer">
+    <EntitySet Name="BASKET" EntityType="Self.BASKET" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Items" EntityType="Self.Items" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Media" EntityType="Self.Media" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OrderList" EntityType="Self.OrderList" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="State" EntityType="Self.State" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Store" EntityType="Self.Store" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Story" EntityType="Self.Story" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_BASKET_Store" Association="Self.FK_BASKET_Store">
+      <End Role="Store" EntitySet="Store" />
+      <End Role="BASKET" EntitySet="BASKET" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BASKET_Users" Association="Self.FK_BASKET_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="BASKET" EntitySet="BASKET" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Items_Category" Association="Self.FK_Items_Category">
+      <End Role="Category" EntitySet="Category" />
+      <End Role="Items" EntitySet="Items" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Order_State" Association="Self.FK_Order_State">
+      <End Role="State" EntitySet="State" />
+      <End Role="Order" EntitySet="Order" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Order_Users" Association="Self.FK_Order_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Order" EntitySet="Order" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderList_Items" Association="Self.FK_OrderList_Items">
+      <End Role="Items" EntitySet="Items" />
+      <End Role="OrderList" EntitySet="OrderList" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderList_Order" Association="Self.FK_OrderList_Order">
+      <End Role="Order" EntitySet="Order" />
+      <End Role="OrderList" EntitySet="OrderList" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Store_Items" Association="Self.FK_Store_Items">
+      <End Role="Items" EntitySet="Items" />
+      <End Role="Store" EntitySet="Store" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Users_Role" Association="Self.FK_Users_Role">
+      <End Role="Role" EntitySet="Role" />
+      <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

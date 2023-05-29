@@ -1,0 +1,301 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ShopModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="BASKET">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="StoreId" Type="Int32" Nullable="false" />
+    <Property Name="Count" Type="Int32" />
+    <NavigationProperty Name="Store" Relationship="Self.FK_BASKET_Store" FromRole="BASKET" ToRole="Store" />
+    <NavigationProperty Name="Users" Relationship="Self.FK_BASKET_Users" FromRole="BASKET" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="Category">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="CategoryId" Type="Int32" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Items" Relationship="Self.FK_Items_Category" FromRole="Category" ToRole="Items" />
+  </EntityType>
+  <EntityType Name="Items">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="CategoryId" Type="Int32" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Category" Relationship="Self.FK_Items_Category" FromRole="Items" ToRole="Category" />
+    <NavigationProperty Name="OrderList" Relationship="Self.FK_OrderList_Items" FromRole="Items" ToRole="OrderList" />
+    <NavigationProperty Name="Store" Relationship="Self.FK_Store_Items" FromRole="Items" ToRole="Store" />
+  </EntityType>
+  <EntityType Name="Media">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FileName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="FileType" Type="String" MaxLength="4" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ItemId" Type="Int32" />
+    <Property Name="CategoryId" Type="Int32" />
+    <Property Name="File" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Order">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="State" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="State1" Relationship="Self.FK_Order_State" FromRole="Order" ToRole="State" />
+    <NavigationProperty Name="Users" Relationship="Self.FK_Order_Users" FromRole="Order" ToRole="Users" />
+    <NavigationProperty Name="OrderList" Relationship="Self.FK_OrderList_Order" FromRole="Order" ToRole="OrderList" />
+  </EntityType>
+  <EntityType Name="OrderList">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="OrderId" Type="Int32" Nullable="false" />
+    <Property Name="ItemId" Type="Int32" Nullable="false" />
+    <Property Name="Price" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="Count" Type="Int32" />
+    <NavigationProperty Name="Items" Relationship="Self.FK_OrderList_Items" FromRole="OrderList" ToRole="Items" />
+    <NavigationProperty Name="Order" Relationship="Self.FK_OrderList_Order" FromRole="OrderList" ToRole="Order" />
+  </EntityType>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Users" Relationship="Self.FK_Users_Role" FromRole="Role" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="State">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Order" Relationship="Self.FK_Order_State" FromRole="State" ToRole="Order" />
+  </EntityType>
+  <EntityType Name="Store">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ItemId" Type="Int32" Nullable="false" />
+    <Property Name="Count" Type="Int32" />
+    <Property Name="DateGet" Type="DateTime" Precision="3" />
+    <Property Name="Price" Type="Decimal" Precision="18" Scale="0" />
+    <NavigationProperty Name="BASKET" Relationship="Self.FK_BASKET_Store" FromRole="Store" ToRole="BASKET" />
+    <NavigationProperty Name="Items" Relationship="Self.FK_Store_Items" FromRole="Store" ToRole="Items" />
+  </EntityType>
+  <EntityType Name="Story">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="ItemId" Type="Int32" Nullable="false" />
+    <Property Name="DataOfPuchase" Type="Double" />
+    <Property Name="TimeOfPurchase" Type="Double" />
+    <Property Name="ListOfPurchase" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+    <Property Name="CommodityPrices" Type="Double" Nullable="false" />
+    <Property Name="TheTotalValueOfTheCheck" Type="Double" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Age" Type="Int32" Nullable="false" />
+    <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="RoleId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="BASKET" Relationship="Self.FK_BASKET_Users" FromRole="Users" ToRole="BASKET" />
+    <NavigationProperty Name="Order" Relationship="Self.FK_Order_Users" FromRole="Users" ToRole="Order" />
+    <NavigationProperty Name="Role" Relationship="Self.FK_Users_Role" FromRole="Users" ToRole="Role" />
+  </EntityType>
+  <Association Name="FK_BASKET_Store">
+    <End Role="Store" Type="Self.Store" Multiplicity="1" />
+    <End Role="BASKET" Type="Self.BASKET" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Store">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="BASKET">
+        <PropertyRef Name="StoreId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BASKET_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="BASKET" Type="Self.BASKET" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="BASKET">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Items_Category">
+    <End Role="Category" Type="Self.Category" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Items" Type="Self.Items" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Category">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Items">
+        <PropertyRef Name="CategoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderList_Items">
+    <End Role="Items" Type="Self.Items" Multiplicity="1" />
+    <End Role="OrderList" Type="Self.OrderList" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Items">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OrderList">
+        <PropertyRef Name="ItemId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Store_Items">
+    <End Role="Items" Type="Self.Items" Multiplicity="1" />
+    <End Role="Store" Type="Self.Store" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Items">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Store">
+        <PropertyRef Name="ItemId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Order_State">
+    <End Role="State" Type="Self.State" Multiplicity="1" />
+    <End Role="Order" Type="Self.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="State">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="State" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Order_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="Order" Type="Self.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderList_Order">
+    <End Role="Order" Type="Self.Order" Multiplicity="1" />
+    <End Role="OrderList" Type="Self.OrderList" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Order">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OrderList">
+        <PropertyRef Name="OrderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Users_Role">
+    <End Role="Role" Type="Self.Role" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Users" Type="Self.Users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Users">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ShopEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="BASKET" EntityType="Self.BASKET" />
+    <EntitySet Name="Category" EntityType="Self.Category" />
+    <EntitySet Name="Items" EntityType="Self.Items" />
+    <EntitySet Name="Media" EntityType="Self.Media" />
+    <EntitySet Name="Order" EntityType="Self.Order" />
+    <EntitySet Name="OrderList" EntityType="Self.OrderList" />
+    <EntitySet Name="Role" EntityType="Self.Role" />
+    <EntitySet Name="State" EntityType="Self.State" />
+    <EntitySet Name="Store" EntityType="Self.Store" />
+    <EntitySet Name="Story" EntityType="Self.Story" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <EntitySet Name="Users" EntityType="Self.Users" />
+    <AssociationSet Name="FK_BASKET_Store" Association="Self.FK_BASKET_Store">
+      <End Role="Store" EntitySet="Store" />
+      <End Role="BASKET" EntitySet="BASKET" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BASKET_Users" Association="Self.FK_BASKET_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="BASKET" EntitySet="BASKET" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Items_Category" Association="Self.FK_Items_Category">
+      <End Role="Category" EntitySet="Category" />
+      <End Role="Items" EntitySet="Items" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderList_Items" Association="Self.FK_OrderList_Items">
+      <End Role="Items" EntitySet="Items" />
+      <End Role="OrderList" EntitySet="OrderList" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Store_Items" Association="Self.FK_Store_Items">
+      <End Role="Items" EntitySet="Items" />
+      <End Role="Store" EntitySet="Store" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Order_State" Association="Self.FK_Order_State">
+      <End Role="State" EntitySet="State" />
+      <End Role="Order" EntitySet="Order" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Order_Users" Association="Self.FK_Order_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Order" EntitySet="Order" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderList_Order" Association="Self.FK_OrderList_Order">
+      <End Role="Order" EntitySet="Order" />
+      <End Role="OrderList" EntitySet="OrderList" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Users_Role" Association="Self.FK_Users_Role">
+      <End Role="Role" EntitySet="Role" />
+      <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

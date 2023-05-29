@@ -1,0 +1,75 @@
+﻿@model SuperShop.Models.Category
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+
+<p>
+    @Html.ActionLink("Add Picture", "CreateCategoryFile", "Media", new { id = Model.Id }, null)
+</p>
+
+
+@if (ViewBag.Media != null && ViewBag.Media.File != null && ViewBag.Media.File.Length > 0)
+{
+
+    <a href="#" id="chooseFileBtn" class="custom-file-upload">
+        <img src="~/Pictures/electronics.png" alt=" файл" width="34" height="34">
+    </a>
+    <a href="#" id="chooseFileBtn" class="custom-file-upload">
+        <img src="~/Pictures/tvset.png" alt=" файл" width="34" height="34">
+    </a>
+    <a href="#" id="chooseFileBtn" class="custom-file-upload">
+        <img src="~/Pictures/book.png" alt=" файл" width="34" height="34">
+    </a>
+    <a href="#" id="chooseFileBtn" class="custom-file-upload">
+        <img src="~/Pictures/Noutpad.png" alt=" файл" width="34" height="34">
+    </a>
+    <a href="#" id="chooseFileBtn" class="custom-file-upload">
+        <img src="~/Pictures/products.png" alt=" файл" width="34" height="34">
+    </a>
+
+}
+
+<p>
+    @Html.ActionLink("Add New Item", "CreateByCategory", "Items")
+</p>
+
+<div>
+    <h4>Category</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CategoryId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CategoryId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+
+    </dl>
+</div>
+
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

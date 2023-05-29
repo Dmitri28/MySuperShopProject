@@ -1,0 +1,10 @@
+﻿@{
+    if (Session["ActiveUser"] == null)
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_LayoutUser.cshtml";
+    }
+}

@@ -1,0 +1,96 @@
+﻿@model SuperShop.Models.Media
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Upload file</h2>
+
+
+@using (Html.BeginForm("UploadFile", "Media", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+
+    <div class="form-group">
+        <div class="col-md-10">
+
+            @Html.ValidationMessageFor(model => model.File, "", new { @class = "text-danger" })
+
+            <!-- Блок для завантаження  файлу -->
+            <!-- Стиль для того щоб кнопки роботи з файлами мали відступ між собою а cстандартні контроли були невидимі-->
+            <style>
+                .form-control-file {
+                    display: none;
+                }
+
+                #submitBtn {
+                    display: none;
+                }
+
+                .custom-file-upload, .btn-img {
+                    margin-right: 32px;
+                }
+
+                .loading-animation {
+                    display: none;
+                }
+            </style>
+            <!-- стандартний компонент вибору файлу його ховаємо -->
+            <input asp-for="file" type="file" class="form-control-file" name="uploadImage" />
+            <!-- кнопка пыдтвердження завантаження файлу на сервер, для форми вводу, але ми ъъ ховаэмо ы реакцыю на ъъ натиск робимо у скрипты внизу, пысля вибору файла у дыалозы-->
+            <button type="submit" id="submitBtn" class="btn btn-primary" style="background-color: gray; color: white; border: 1px solid black;"></button>
+
+            <a href="#" id="chooseFileBtn" class="custom-file-upload">
+                <img src="~/Pictures/images.png" alt=" файл" width="34" height="34">
+            </a>
+            
+
+
+
+
+
+        </div>
+
+    </div>
+
+}
+
+
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+
+
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        document.querySelector('input[type="file"]').addEventListener('change', function () {
+            document.getElementById('submitBtn').click();
+        });
+    </script>
+
+    <script>
+        const fileUpload = document.querySelector('.form-control-file');
+        const fileBtn = document.querySelector('.custom-file-upload');
+        const fileReadyMessage = document.querySelector('.file-ready-message');
+
+        fileBtn.addEventListener('click', () => {
+            fileUpload.click();
+        });
+
+        fileUpload.addEventListener('change', () => {
+            const formData = new FormData();
+            formData.append('file', fileUpload.files[0]);
+
+            fetch('/UploadFile', {
+                method: 'POST',
+                body: formData
+            })
+
+                .catch(error => {
+                    console.error(error);
+                });
+        });
+    </script>
+}
